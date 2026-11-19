@@ -39,6 +39,40 @@ const THEME_CSS = `
   .hhcs-input:focus { outline: none; box-shadow: 0 0 0 2px var(--hhcs-teal); border-color: var(--hhcs-teal); }
   .hhcs-required-empty { border-color: #dc2626 !important; }
 
+  /* Care-log workspace: consistent form controls, headings and tap targets
+     across all six tabs. Scoped so the login screen and print report are
+     unaffected. 16px input text on phones stops iOS zoom-on-focus. */
+  .hhcs-workspace h2 {
+    font-size: 1.0625rem; line-height: 1.35; font-weight: 700; color: var(--hhcs-navy);
+    padding-bottom: 0.75rem; border-bottom: 1px solid #e2e8f0; overflow-wrap: anywhere;
+  }
+  .hhcs-workspace label { display: block; font-size: 0.75rem; font-weight: 600; color: #475569; }
+  .hhcs-workspace input:not([type=checkbox]):not([type=radio]):not([type=file]),
+  .hhcs-workspace select,
+  .hhcs-workspace textarea {
+    box-sizing: border-box; max-width: 100%; min-width: 0; min-height: 44px;
+    font-size: 16px; line-height: 1.4; padding: 0.55rem 0.75rem;
+    border-radius: 0.625rem; background-color: #ffffff;
+  }
+  .hhcs-workspace textarea { min-height: 5rem; resize: vertical; }
+  .hhcs-workspace .flex.gap-2 > button:not([aria-label]),
+  .hhcs-workspace button.w-full { min-height: 44px; border-radius: 0.625rem; }
+  .hhcs-workspace [aria-label^="Previous"], .hhcs-workspace [aria-label^="Next"] {
+    min-width: 44px; min-height: 44px; font-size: 1.25rem; line-height: 1;
+  }
+  .hhcs-workspace [role="button"] { padding: 0.5rem 0.625rem; }
+  .hhcs-workspace > div > div > .rounded-xl { box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04); }
+  @media (min-width: 640px) {
+    .hhcs-workspace input:not([type=checkbox]):not([type=radio]):not([type=file]),
+    .hhcs-workspace select,
+    .hhcs-workspace textarea { font-size: 0.875rem; }
+  }
+  @media (min-width: 1024px) {
+    .hhcs-workspace h2 { font-size: 1.125rem; }
+    .hhcs-workspace .flex.gap-2 > button:not([aria-label]) { flex: 0 1 auto; min-width: 8rem; }
+    .hhcs-workspace .flex.gap-2 > button.flex-1 { flex: 1 1 0%; }
+  }
+
   /* Print styles for the shift report — only affects window.print() output */
   @media print {
     @page { margin: 1.5cm; }
@@ -794,7 +828,7 @@ function MedicationSignOff() {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-slate-800">
           Medication Sign-Off — {selectedParticipant.name}
@@ -1078,7 +1112,7 @@ function FoodDiaryGrid() {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-slate-800">Food Diary — {selectedParticipant.name}</h2>
       </div>
@@ -1517,7 +1551,7 @@ function SleepLog() {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-slate-800">Sleep Log — {selectedParticipant.name}</h2>
       </div>
@@ -1874,7 +1908,7 @@ function ProgressNotes() {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-slate-800">Progress Notes — {selectedParticipant.name}</h2>
       </div>
@@ -2128,7 +2162,7 @@ function IncidentReport() {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-slate-800">Incident Report — {selectedParticipant.name}</h2>
       </div>
@@ -2425,7 +2459,7 @@ function GalleryTab() {
   }
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="font-semibold text-slate-800">Gallery — {selectedParticipant.name}</h2>
       </div>
@@ -2456,7 +2490,7 @@ function GalleryTab() {
         </p>
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3">
         {photos.map((p) => (
           <div key={p.id} className="rounded-xl border border-slate-200 bg-white overflow-hidden">
             {p.displayUrl ? (
@@ -2512,13 +2546,13 @@ const TABS = [
 
 function TabNav({ active, onChange }) {
   return (
-    <div className="flex gap-1 p-1 hhcs-bg-navy-tint rounded-xl overflow-x-auto lg:overflow-visible lg:flex-wrap">
+    <div className="grid grid-cols-3 lg:grid-cols-2 gap-1.5 p-1.5 hhcs-bg-navy-tint rounded-xl">
       {TABS.map((t) => (
         <button
           key={t.key}
           type="button"
           onClick={() => onChange(t.key)}
-          className={`flex-1 text-sm font-semibold py-2 px-2 rounded-lg transition-colors whitespace-nowrap
+          className={`min-w-0 min-h-[44px] flex items-center justify-center text-center text-xs sm:text-sm font-semibold leading-tight py-2 px-1.5 rounded-lg transition-colors
             ${active === t.key ? 'hhcs-tab-active' : 'text-slate-500'}`}
         >
           {t.label}
@@ -2840,9 +2874,9 @@ function Dashboard() {
   const [tab, setTab] = useState('medication');
 
   return (
-    <div className="min-h-screen bg-slate-100 p-4 sm:p-6 lg:p-10">
-      <div className="max-w-md sm:max-w-xl lg:max-w-6xl mx-auto lg:grid lg:grid-cols-[300px_1fr] lg:gap-6 lg:items-start">
-        <div className="space-y-4 lg:sticky lg:top-10 hhcs-app-sidebar">
+    <div className="min-h-screen bg-slate-100 p-4 sm:p-6 lg:p-8 overflow-x-hidden">
+      <div className="max-w-md sm:max-w-xl lg:max-w-6xl mx-auto flex flex-col gap-4 lg:grid lg:grid-cols-[320px_minmax(0,1fr)] lg:gap-6 lg:items-start">
+        <div className="space-y-4 min-w-0 lg:sticky lg:top-8 hhcs-app-sidebar">
           <HopeHeaderBanner />
 
           <StaffAttributionBar />
@@ -2851,7 +2885,7 @@ function Dashboard() {
           <ShiftReportButton />
         </div>
 
-        <div className="mt-4 lg:mt-0 lg:bg-white lg:rounded-xl lg:border lg:border-slate-200 lg:p-6">
+        <div className="hhcs-workspace min-w-0 rounded-xl border border-slate-200 bg-white p-4 sm:p-5 lg:p-6 shadow-sm">
           <div className={tab === 'medication' ? '' : 'hidden'}><MedicationSignOff /></div>
           <div className={tab === 'food' ? '' : 'hidden'}><FoodDiaryGrid /></div>
           <div className={tab === 'sleep' ? '' : 'hidden'}><SleepLog /></div>
