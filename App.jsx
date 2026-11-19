@@ -364,21 +364,21 @@ function StaffLogin() {
 
   if (!selected) {
     return (
-      <div className="min-h-screen bg-slate-100 p-4 sm:p-6 lg:p-10 flex items-center justify-center">
-        <div className="w-full max-w-md lg:max-w-2xl xl:max-w-3xl space-y-4">
+      <div className="min-h-screen bg-slate-100 px-4 py-6 sm:p-6 lg:p-10 flex items-center justify-center overflow-x-hidden">
+        <div className="w-full max-w-md lg:max-w-2xl xl:max-w-3xl space-y-4 lg:space-y-5">
           <HopeHeaderBanner size="lg" />
-          <div className="rounded-xl border hhcs-border-navy bg-white p-4 lg:p-6">
-            <p className="text-sm font-semibold hhcs-text-navy mb-3">Tap your name to sign in</p>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
+          <div className="rounded-xl border hhcs-border-navy bg-white p-4 sm:p-5 lg:p-7 shadow-sm">
+            <p className="text-sm lg:text-base font-semibold hhcs-text-navy mb-3 lg:mb-4">Tap your name to sign in</p>
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 lg:gap-3">
               {STAFF_LIST.map((s) => (
                 <button
                   key={s.name}
                   type="button"
                   onClick={() => setSelected(s)}
-                  className="text-left rounded-lg border border-slate-200 px-3 py-2.5 hover:hhcs-bg-teal-tint hover:hhcs-border-teal transition-colors"
+                  className="min-w-0 min-h-[56px] flex flex-col justify-center text-left rounded-lg border border-slate-200 bg-white px-3 py-2 lg:px-4 shadow-sm transition-all duration-150 hover:hhcs-bg-teal-tint hover:hhcs-border-teal hover:shadow-md hover:-translate-y-px active:translate-y-0 active:scale-[0.98] active:shadow-none focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 focus-visible:ring-slate-400"
                 >
-                  <p className="text-sm font-medium text-slate-800 truncate">{s.name}</p>
-                  {s.role && <p className="text-xs hhcs-text-teal">{s.role}</p>}
+                  <p className="text-sm font-medium text-slate-800 truncate leading-tight">{s.name}</p>
+                  {s.role && <p className="text-xs hhcs-text-teal truncate leading-tight mt-0.5">{s.role}</p>}
                 </button>
               ))}
             </div>
